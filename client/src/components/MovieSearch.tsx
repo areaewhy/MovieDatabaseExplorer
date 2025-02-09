@@ -6,8 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Search } from "lucide-react";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import type { Movie } from "../types/tmdb";
 import { useQuery } from "@tanstack/react-query";
 import { searchMovies } from "../lib/tmdb";
@@ -19,11 +17,10 @@ const searchSchema = z.object({
 type SearchFormData = z.infer<typeof searchSchema>;
 
 interface MovieSearchProps {
-  onSearch: (query: string) => void;
   onMovieSelect: (movie: Movie) => void;
 }
 
-export function MovieSearch({ onSearch, onMovieSelect }: MovieSearchProps) {
+export function MovieSearch({ onMovieSelect }: MovieSearchProps) {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -43,7 +40,6 @@ export function MovieSearch({ onSearch, onMovieSelect }: MovieSearchProps) {
   const sortedSuggestions = suggestions?.sort((a, b) => b.popularity - a.popularity);
 
   const onSubmit = (data: SearchFormData) => {
-    onSearch(data.query);
     setOpen(false);
   };
 
