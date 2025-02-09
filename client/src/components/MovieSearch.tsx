@@ -53,44 +53,42 @@ export function MovieSearch({ onSearch, onMovieSelect }: MovieSearchProps) {
           name="query"
           render={({ field }) => (
             <FormItem className="flex-1">
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Input 
-                      placeholder="Search for movies..." 
-                      className="bg-[#C3C7CB] border-[#424242] focus-visible:ring-0"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        setSearchTerm(e.target.value);
-                        if (e.target.value.length > 2) {
-                          setOpen(true);
-                        }
-                      }}
-                    />
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="p-0 w-full">
-                  <Command className="bg-[#C3C7CB]">
-                    <CommandEmpty>No movies found.</CommandEmpty>
-                    <CommandGroup>
-                      {suggestions?.map((movie) => (
-                        <CommandItem
+              <div className="relative">
+                <FormControl>
+                  <Input 
+                    placeholder="Search for movies..." 
+                    className="bg-[#C3C7CB] border-[#424242] focus-visible:ring-0"
+                    {...field}
+                    value={searchTerm}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setSearchTerm(value);
+                      field.onChange(value);
+                      setOpen(value.length > 2);
+                    }}
+                  />
+                </FormControl>
+                {open && suggestions && suggestions.length > 0 && (
+                  <div className="absolute z-50 w-full mt-1">
+                    <div className="bg-[#C3C7CB] border-2 border-t-[#FFFFFF] border-l-[#FFFFFF] border-b-[#424242] border-r-[#424242]">
+                      {suggestions.map((movie) => (
+                        <div
                           key={movie.id}
-                          onSelect={() => {
+                          className="p-2 cursor-pointer hover:bg-[#000080] hover:text-white"
+                          onClick={() => {
+                            setSearchTerm(movie.title);
                             field.onChange(movie.title);
                             onMovieSelect(movie);
                             setOpen(false);
                           }}
-                          className="cursor-pointer hover:bg-[#000080] hover:text-white"
                         >
                           {movie.title}
-                        </CommandItem>
+                        </div>
                       ))}
-                    </CommandGroup>
-                  </Command>
-                </PopoverContent>
-              </Popover>
+                    </div>
+                  </div>
+                )}
+              </div>
             </FormItem>
           )}
         />
