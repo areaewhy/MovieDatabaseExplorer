@@ -74,7 +74,7 @@ export function MovieSearch({ onSearch, onMovieSelect }: MovieSearchProps) {
                       {suggestions.map((movie) => (
                         <div
                           key={movie.id}
-                          className="p-2 cursor-pointer hover:bg-[#000080] hover:text-white"
+                          className="p-2 cursor-pointer hover:bg-[#000080] hover:text-white flex items-center gap-2"
                           onClick={() => {
                             setSearchTerm(movie.title);
                             field.onChange(movie.title);
@@ -82,7 +82,18 @@ export function MovieSearch({ onSearch, onMovieSelect }: MovieSearchProps) {
                             setOpen(false);
                           }}
                         >
-                          {movie.title}
+                          {movie.poster_path ? (
+                            <img 
+                              src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`}
+                              alt={movie.title}
+                              className="w-10 h-14 object-cover border border-[#424242]"
+                            />
+                          ) : (
+                            <div className="w-10 h-14 bg-[#808080] border border-[#424242] flex items-center justify-center">
+                              <Search className="w-4 h-4" />
+                            </div>
+                          )}
+                          <span className="flex-1">{movie.title}</span>
                         </div>
                       ))}
                     </div>
