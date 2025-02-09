@@ -23,6 +23,7 @@ interface MovieSearchProps {
 
 export function MovieSearch({ onMovieSelect }: MovieSearchProps) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isMovieSelected, setIsMovieSelected] = useState(false);
 
   const form = useForm<SearchFormData>({
     resolver: zodResolver(searchSchema),
@@ -61,6 +62,7 @@ export function MovieSearch({ onMovieSelect }: MovieSearchProps) {
                     onChange={(e) => {
                       const value = e.target.value;
                       setSearchTerm(value);
+                      setIsMovieSelected(false);
                       field.onChange(value);
                     }}
                   />
@@ -78,7 +80,7 @@ export function MovieSearch({ onMovieSelect }: MovieSearchProps) {
         </form>
       </Form>
 
-      {suggestions && suggestions.length > 0 && (
+      {!isMovieSelected && suggestions && suggestions.length > 0 && (
         <div className="border-2 border-t-[#FFFFFF] border-l-[#FFFFFF] border-b-[#424242] border-r-[#424242] bg-[#C3C7CB]">
           <ScrollArea className="h-[400px]">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2">
@@ -89,6 +91,7 @@ export function MovieSearch({ onMovieSelect }: MovieSearchProps) {
                   onClick={() => {
                     setSearchTerm(movie.title);
                     form.setValue("query", movie.title);
+                    setIsMovieSelected(true);
                     onMovieSelect(movie);
                   }}
                 >
