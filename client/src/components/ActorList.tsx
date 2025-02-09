@@ -22,32 +22,32 @@ export function ActorList({ actors }: ActorListProps) {
         <Users className="h-4 w-4 mr-2" />
         <CardTitle className="text-sm font-normal">Cast Members</CardTitle>
       </CardHeader>
-      <CardContent className="p-4">
-        <ScrollArea className="h-[400px] pr-4">
-          <div className="space-y-4">
+      <CardContent className="p-2 sm:p-4">
+        <ScrollArea className="h-[300px] sm:h-[400px] pr-2 sm:pr-4">
+          <div className="space-y-2 sm:space-y-4">
             {sortedActors.map((actor) => (
               <div 
                 key={actor.id} 
-                className="bg-[#FFFFFF] p-3 border-t-[#FFFFFF] border-l-[#FFFFFF] border-b-[#424242] border-r-[#424242] border-2"
+                className="bg-[#FFFFFF] p-2 sm:p-3 border-t-[#FFFFFF] border-l-[#FFFFFF] border-b-[#424242] border-r-[#424242] border-2"
               >
-                <div className="flex gap-3">
+                <div className="flex gap-2 sm:gap-3">
                   {actor.profile_path && (
                     <img
                       src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
                       alt={actor.name}
-                      className="w-16 h-24 object-cover border-2 border-[#424242]"
+                      className="w-12 sm:w-16 h-18 sm:h-24 object-cover border-2 border-[#424242]"
                     />
                   )}
                   <div>
-                    <h3 className="font-bold">{actor.name}</h3>
-                    <p className="text-sm">as {actor.character}</p>
+                    <h3 className="font-bold text-sm sm:text-base">{actor.name}</h3>
+                    <p className="text-xs sm:text-sm">as {actor.character}</p>
                     {actor.birthday && (
-                      <p className="text-sm">
+                      <p className="text-xs sm:text-sm">
                         Born: {new Date(actor.birthday).toLocaleDateString()}
                       </p>
                     )}
                     {actor.deathday && (
-                      <p className="text-sm text-red-600">
+                      <p className="text-xs sm:text-sm text-red-600">
                         Died: {new Date(actor.deathday).toLocaleDateString()}
                       </p>
                     )}
