@@ -23,11 +23,16 @@ export default function Home() {
     enabled: !!selectedMovie
   });
 
+  const handleMovieSelect = (movie: Movie) => {
+    setSelectedMovie(movie);
+    setSearchQuery(movie.title);
+  };
+
   return (
     <div className="min-h-screen bg-[#008080] p-4">
       <div className="max-w-6xl mx-auto">
         <div className="bg-[#C3C7CB] border-t-[#FFFFFF] border-l-[#FFFFFF] border-b-[#424242] border-r-[#424242] border-2 p-4 mb-4">
-          <MovieSearch onSearch={setSearchQuery} />
+          <MovieSearch onSearch={setSearchQuery} onMovieSelect={handleMovieSelect} />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

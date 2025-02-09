@@ -8,6 +8,14 @@ interface ActorListProps {
 }
 
 export function ActorList({ actors }: ActorListProps) {
+  // Sort actors by death date descending, putting null dates at the end
+  const sortedActors = [...actors].sort((a, b) => {
+    if (!a.deathday && !b.deathday) return 0;
+    if (!a.deathday) return 1;
+    if (!b.deathday) return -1;
+    return new Date(b.deathday).getTime() - new Date(a.deathday).getTime();
+  });
+
   return (
     <Card className="bg-[#C3C7CB] border-[#424242]">
       <CardHeader className="bg-[#000080] text-white p-2 flex flex-row items-center space-y-0">
@@ -17,7 +25,7 @@ export function ActorList({ actors }: ActorListProps) {
       <CardContent className="p-4">
         <ScrollArea className="h-[400px] pr-4">
           <div className="space-y-4">
-            {actors.map((actor) => (
+            {sortedActors.map((actor) => (
               <div 
                 key={actor.id} 
                 className="bg-[#FFFFFF] p-3 border-t-[#FFFFFF] border-l-[#FFFFFF] border-b-[#424242] border-r-[#424242] border-2"
@@ -39,7 +47,7 @@ export function ActorList({ actors }: ActorListProps) {
                       </p>
                     )}
                     {actor.deathday && (
-                      <p className="text-sm">
+                      <p className="text-sm text-red-600">
                         Died: {new Date(actor.deathday).toLocaleDateString()}
                       </p>
                     )}
