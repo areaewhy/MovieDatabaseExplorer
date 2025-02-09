@@ -4,6 +4,7 @@ export interface Movie {
   poster_path: string | null;
   release_date: string;
   overview: string;
+  popularity: number;
 }
 
 export interface Actor {

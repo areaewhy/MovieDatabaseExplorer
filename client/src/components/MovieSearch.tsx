@@ -40,6 +40,8 @@ export function MovieSearch({ onSearch, onMovieSelect }: MovieSearchProps) {
     enabled: searchTerm.length > 2
   });
 
+  const sortedSuggestions = suggestions?.sort((a, b) => b.popularity - a.popularity);
+
   const onSubmit = (data: SearchFormData) => {
     onSearch(data.query);
     setOpen(false);
@@ -71,7 +73,7 @@ export function MovieSearch({ onSearch, onMovieSelect }: MovieSearchProps) {
                 {open && suggestions && suggestions.length > 0 && (
                   <div className="absolute z-50 w-full mt-1">
                     <div className="bg-[#C3C7CB] border-2 border-t-[#FFFFFF] border-l-[#FFFFFF] border-b-[#424242] border-r-[#424242]">
-                      {suggestions.map((movie) => (
+                      {sortedSuggestions?.map((movie) => (
                         <div
                           key={movie.id}
                           className="p-2 cursor-pointer hover:bg-[#000080] hover:text-white flex items-center gap-2"
